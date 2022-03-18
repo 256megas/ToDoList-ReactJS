@@ -9,9 +9,23 @@ class Todo extends Component {
     };
   }
 
-  addTask(event) {
+  addHandle(event) {
     this.setState({
       list: [...this.state.list, document.getElementById("inputTask").value],
+    });
+  }
+
+  deleteHandle(id) {
+
+    // let newToDo = delete this.state.list["id.id"];
+    var tempList = this.state.list;
+    tempList.forEach((task, i) => {
+      if (i === id.id) {
+        tempList.splice(i, 1);
+      }
+    });
+    this.setState({
+      list: tempList,
     });
   }
 
@@ -29,7 +43,7 @@ class Todo extends Component {
             <input
               type="button"
               value="Add Task"
-              onClick={() => this.addTask()}
+              onClick={() => this.addHandle()}
             />
           </form>
           <hr />
@@ -37,7 +51,16 @@ class Todo extends Component {
         <div className="listTodo">
           <ul>
             {this.state.list.map((task, id) => {
-              return <li key={id}>{task}</li>;
+              return (
+                <li key={id}>
+                  {task} -
+                  <input
+                    type="button"
+                    value="Delete Task"
+                    onClick={() => this.deleteHandle({ id })}
+                  />
+                </li>
+              );
             })}
           </ul>
         </div>
